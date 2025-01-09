@@ -6,6 +6,7 @@ import { PostListComponent } from "./posts/post-list/post-list.component";
 import { MATERIAL_IMPORTS } from './shared/material-share';
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { FooterComponent } from "./footer/footer.component";
+import { PostModel } from './model/post.model';
 
 @Component({
   selector: 'app-root',

@@ -1,14 +1,28 @@
 <mat-card>
     <form (submit)="onAddPost(postForm)" #postForm="ngForm">
-        <mat-form-field class="example-full-width">
-            <mat-label>Title</mat-label>
-            <input matInput name="title" ngModel placeholder="Post Title" required>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Content</mat-label>
-            <textarea matInput name="content" rows="4" placeholder="Post Content" ngModel required></textarea>
-        </mat-form-field>
+        <div class="flex flex-col m-4">
+            <div class="columns-1">
+                <mat-form-field class="w-full">
+                    <mat-label>Title</mat-label>
+                    <input matInput type="text" name="title" ngModel placeholder="Post Title" required #title="ngModel"
+                        minlength="3" />
+                    @if (title.invalid) {
+                    <mat-error>Please enter post title</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="columns-1">
+                <mat-form-field class="w-full">
+                    <mat-label>Content</mat-label>
+                    <textarea matInput name="content" rows="4" placeholder="Post Content" ngModel required
+                        #contet="ngModel">
+                    </textarea>
+                    @if (title.invalid) {
+                    <mat-error>Please enter post content</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
 
         <div class="cus-btn">
             <button mat-raised-button type="submit" color="accent">Save Post</button>

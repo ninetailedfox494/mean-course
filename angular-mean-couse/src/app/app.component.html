@@ -18,9 +18,9 @@
     <app-header (toggleSidebar)="toggleSidebar()"></app-header>
 
     <!-- Main Content Area -->
-    <div class="content">
-      <app-post-create (postCreated)="onPostAdded($event)"/>
-      <app-post-list [dataSource] ="storePost" class="cus-post-list"/>
+    <div class="container mx-auto">
+      <app-post-create />
+      <app-post-list class="cus-post-list" />
     </div>
 
     <!-- Footer -->
