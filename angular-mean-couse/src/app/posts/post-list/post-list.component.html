@@ -2,14 +2,19 @@
 <mat-accordion>
     @for(item of dataSource; track item.id) {
     <mat-expansion-panel>
-        <mat-expansion-panel-header>    
+        <mat-expansion-panel-header>
             {{ item?.title }}
         </mat-expansion-panel-header>
-        <p>{{item?.content}}</p>
+        <p>{{ item?.content }}</p>
+        <mat-action-row>
+            <button mat-button (click)="onEdit()"><mat-icon>edit</mat-icon></button>
+            <button mat-button class="cus-btn-delete" (click)="onDelete(item.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-action-row>
     </mat-expansion-panel>
     }
 </mat-accordion>
-}
-@else {
+} @else {
 <p>No posts found</p>
 }
