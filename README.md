@@ -26,3 +26,11 @@ https://material.angular.io/components/input/examples
 
 # Tailwindcss
 https://tailwindcss.com/docs/installation
+
+# How to build and start project 
+- please run base on package.json
+  1. angular
+   - run app: ng s
+  
+  2. express
+   - run sever:  npm run start:server

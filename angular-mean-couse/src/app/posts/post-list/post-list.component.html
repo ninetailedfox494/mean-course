@@ -1,13 +1,18 @@
-@if(dataSource.length >0){
+@if (isLoading) {
+<mat-spinner class="mat-spinner"></mat-spinner>
+} @else {
+@if (dataSource.length > 0) {
 <mat-accordion>
-    @for(item of dataSource; track item.id) {
+    @for (item of dataSource; track item.id) {
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             {{ item?.title }}
         </mat-expansion-panel-header>
         <p>{{ item?.content }}</p>
         <mat-action-row>
-            <button mat-button (click)="onEdit()"><mat-icon>edit</mat-icon></button>
+            <a mat-button [routerLink]="['/edit', item.id]" routerLinkActive="router-link-active">
+                <mat-icon>edit</mat-icon>
+            </a>
             <button mat-button class="cus-btn-delete" (click)="onDelete(item.id)">
                 <mat-icon>delete</mat-icon>
             </button>
@@ -17,4 +22,5 @@
 </mat-accordion>
 } @else {
 <p>No posts found</p>
+}
 }

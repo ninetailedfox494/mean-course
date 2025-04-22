@@ -1,6 +1,7 @@
 <mat-nav-list>
-    <a mat-list-item routerLink="/" routerLinkActive="active-link">Home</a>
-    <a mat-list-item routerLink="/about" routerLinkActive="active-link">About</a>
-    <a mat-list-item routerLink="/contact" routerLinkActive="active-link">Contact</a>
-  </mat-nav-list>
-  
+  <a mat-list-item routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"> Home</a>
+  <a mat-list-item routerLink="/create" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">New
+    Post</a>
+  <a mat-list-item routerLink="/contact" routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }">Contact</a>
+</mat-nav-list>

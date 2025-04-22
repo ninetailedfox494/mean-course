@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 
 const bodyParser = require("body-parser");
 
-const PostModel = require("./models/postModel");
+const postsRoutes = require("./routes/posts");
+
 const { log } = require("@angular-devkit/build-angular/src/builders/ssr-dev-server");
 
 const app = express();
@@ -12,7 +13,7 @@ const password = encodeURIComponent("gWCRg9B8OBac6Wtd");
 const cluster = "cluster0.6hfz6.mongodb.net";
 
 const dbName = "node-angular";
-
+//take note: db mongo is cloud
 let uri = `mongodb+srv://${username}:${password}@${cluster}/node-angular?retryWrites=true&w=majority&appName=Cluster0`;
 
 mongoose
@@ -38,28 +39,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post("/api/posts", (req, res, next) => {
-    const post = new PostModel({
-        title: req.body.title,
-        content: req.body.content,
-    });
-    post.save().then(data => {
-        res.status(201).json({ message: "Post added successfully!!", postId: data._id });
-    });
-
-});
-
-app.get("/api/posts", (req, res, next) => {
-    PostModel.find().then(data => {
-        console.log(data);
-        res.status(200).json({ message: "Post fetched successfully!!", data });
-    });
-});
-
-app.delete("/api/posts/:id", (req, res, next) => {
-    PostModel.deleteOne({ _id: req.params.id }).then(data => {
-        res.status(201).json({ message: "Post delete successfully!!" });
-    });
-});
+app.use("/api/posts", postsRoutes);
 
 module.exports = app;

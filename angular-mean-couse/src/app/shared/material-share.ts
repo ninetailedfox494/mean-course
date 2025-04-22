@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 export const MATERIAL_IMPORTS = [
   MatSidenavModule,
@@ -19,5 +20,6 @@ export const MATERIAL_IMPORTS = [
   MatSnackBarModule,
   MatFormFieldModule,
   MatExpansionModule,
-  MatListModule
+  MatListModule,
+  MatProgressSpinnerModule
 ];
