@@ -8,6 +8,9 @@
         <mat-expansion-panel-header>
             {{ item?.title }}
         </mat-expansion-panel-header>
+        <div class="post-image">
+            <img [src]="item?.imagePath" [alt]="item?.title" />
+        </div>
         <p>{{ item?.content }}</p>
         <mat-action-row>
             <a mat-button [routerLink]="['/edit', item.id]" routerLinkActive="router-link-active">

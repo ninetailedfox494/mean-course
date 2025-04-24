@@ -3,25 +3,35 @@
     <mat-spinner class="mat-spinner"></mat-spinner>
     }
     @else {
-    <form (submit)="onSavePost(postForm)" #postForm="ngForm">
+    <form [formGroup]="form" (submit)="onSavePost()">
         <div class="flex flex-col m-4">
             <div class="columns-1">
                 <mat-form-field class="w-full">
                     <mat-label>Title</mat-label>
-                    <input matInput type="text" name="title" [ngModel]="post?.title" placeholder="Post Title" required
-                        #title="ngModel" minlength="3" />
-                    @if (title.invalid) {
+                    <input matInput type="text" name="title" placeholder="Post Title" formControlName="title" />
+                    @if (form.get('title')?.invalid && form.get('title')?.touched) {
                     <mat-error>Please enter post title</mat-error>
                     }
                 </mat-form-field>
             </div>
+            <div class="columns-1 flex mb-5">
+                <div class="columns-2">
+                    <button style="margin-bottom: 15px;" mat-stroked-button type="button"
+                        (click)="filePicker.click()">Pick Image</button>
+                    <input type="file" #filePicker (change)="onImagePicked($event)" />
+                </div>
+                @if(imgReview && form.get('image')?.valid ) {
+                <div class="columns-2">
+                    <img [src]="imgReview" [alt]="form.value.title" />
+                </div>
+                }
+            </div>
             <div class="columns-1">
                 <mat-form-field class="w-full">
                     <mat-label>Content</mat-label>
-                    <textarea matInput name="content" rows="4" placeholder="Post Content" [ngModel]="post?.content"
-                        required #contet="ngModel">
+                    <textarea matInput name="content" rows="4" placeholder="Post Content" formControlName="content">
                     </textarea>
-                    @if (title.invalid) {
+                    @if (form.get('content')?.invalid && form.get('content')?.touched) {
                     <mat-error>Please enter post content</mat-error>
                     }
                 </mat-form-field>
