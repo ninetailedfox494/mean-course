@@ -54,9 +54,9 @@ export class PostCreateComponent implements OnInit {
     if (this.form.invalid) { return; }
 
     if (this.isEditMode && this.postId) {
-      this.postServices.updatePost(this.postId, this.form.value.title, this.form.value.content, this.form.value.image);
+      this.onUpdate(this.postId);
     } else {
-      this.postServices.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
+      this.onCreate();
     }
 
     this.form.reset();
@@ -100,5 +100,25 @@ export class PostCreateComponent implements OnInit {
       }
       reader.readAsDataURL(file);
     }
+  }
+
+  onCreate() {
+    this.postServices.addPost(this.form.value.title, this.form.value.content, this.form.value.image)
+      .subscribe((response) => {
+        if (!response) {
+          console.log('err', response)
+        }
+      });
+  }
+
+  onUpdate(id: any) {
+    this.postServices.updatePost(id, this.form.value.title, this.form.value.content, this.form.value.image)
+      .subscribe((response) => {
+        if (!response) {
+          console.log('err', response)
+        } else {
+          console.log(response);
+        }
+      })
   }
 }

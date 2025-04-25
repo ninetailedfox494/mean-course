@@ -9,6 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 export const MATERIAL_IMPORTS = [
   MatSidenavModule,
@@ -21,5 +22,6 @@ export const MATERIAL_IMPORTS = [
   MatFormFieldModule,
   MatExpansionModule,
   MatListModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatPaginatorModule
 ];

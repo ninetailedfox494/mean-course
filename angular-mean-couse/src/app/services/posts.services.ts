@@ -9,34 +9,34 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PostServices {
     private posts: any = [];
-    private postUpdated = new Subject<PostModel[]>();
+    private postUpdated = new Subject<{ posts: PostModel[], totalCount: number }>();
 
     constructor(private http: HttpClient) { }
 
-    getPosts() {
+    getPosts(pageSize: number, pageNumber: number) {
+        const queryParams = `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
         return this.http
-            .get<{ message: string; data: any }>(
-                'http://localhost:3000/api/posts'
+            .get<{ message: string; data: any, totalCount: any }>(
+                'http://localhost:3000/api/posts' + queryParams
             )
             .pipe(map((postData) => {
-                return postData.data.map((post: any) => {
-                    return {
-                        title: post.title,
-                        content: post.content,
-                        id: post._id,
-                        imagePath: post.imagePath,
-                    };
-                });
-            }))
-            .subscribe((res) => {
-                this.posts = res;
-                this.postUpdated.next([...this.posts]);
-            });
+                return {
+                    posts: postData.data.map((post: any) => {
+                        return {
+                            title: post.title,
+                            content: post.content,
+                            id: post._id,
+                            imagePath: post.imagePath,
+                        };
+                    }),
+                    totalCount: postData.totalCount,
+                }
+            }));
     }
 
-    getPostUpdateListener() {
-        return this.postUpdated.asObservable();
-    }
+    // getPostUpdateListener() {
+    //     return this.postUpdated.asObservable();
+    // }
 
     addPost(title: string, content: string, image: File) {
         // had 2 type push data via model
@@ -47,30 +47,13 @@ export class PostServices {
         postData.append('content', content);
         postData.append('image', image, title);
 
-        this.http
-            .post<{ message: string, post: PostModel }>('http://localhost:3000/api/posts', postData)
-            .subscribe((res) => {
-                const post: PostModel = {
-                    id: res.post.id,
-                    title: title,
-                    content: content,
-                    imagePath: res.post.imagePath,
-                };
-                this.posts.push(post);
-                this.postUpdated.next([...this.posts]);
-            });
+        return this.http
+            .post<{ message: string, post: PostModel }>('http://localhost:3000/api/posts', postData);
     }
 
     deletePost(postId: string) {
-        this.http
-            .delete('http://localhost:3000/api/posts/' + postId)
-            .subscribe(() => {
-                const updatedPosts = this.posts.filter(
-                    (post: PostModel) => post.id !== postId
-                );
-                this.posts = updatedPosts;
-                this.postUpdated.next([...this.posts]);
-            });
+        return this.http
+            .delete('http://localhost:3000/api/posts/' + postId);
     }
 
     getPostById(id: string | null) {
@@ -103,24 +86,7 @@ export class PostServices {
             };
         }
 
-        this.http
-            .put('http://localhost:3000/api/posts/' + id, postData)
-            .subscribe((res) => {
-                const response = res as { message: string; imagePath: string };
-                const updatedPosts = [...this.posts];
-                const oldPostIndex = updatedPosts.findIndex(
-                    (p: PostModel) => p.id === id
-                );
-                
-                const post : PostModel = {
-                    id: id,
-                    title: title,
-                    content: content,
-                    imagePath: response.imagePath ,
-                };
-                updatedPosts[oldPostIndex] = post;
-                this.posts = updatedPosts;
-                this.postUpdated.next([...this.posts]);
-            });
+        return this.http
+            .put('http://localhost:3000/api/posts/' + id, postData);
     }
 }
